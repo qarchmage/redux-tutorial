@@ -1,27 +1,30 @@
+import { List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import MusicNoteIcon from "@material-ui/icons/MusicNote";
 import React from "react";
 import useSongListReducer from "./useSongListReducer";
 
 const SongList = (): JSX.Element => {
     const { songs, setSong } = useSongListReducer();
-    const renderList = () => {
-        return songs.map((song) => {
-            return (
-                <div className="item" key={song.title}>
-                    <div className="right floated content">
-                        <button
-                            className="ui button primary"
+    return (
+        <>
+            <List component="nav" aria-label="main mailbox folders">
+                {songs.map((song) => {
+                    return (
+                        <ListItem
+                            button
+                            key={song.title}
                             onClick={() => setSong(song)}
                         >
-                            Select
-                        </button>
-                    </div>
-                    <div className="content">{song.title}</div>
-                </div>
-            );
-        });
-    };
-
-    return <div className="ui divided list">{renderList()}</div>;
+                            <ListItemIcon>
+                                <MusicNoteIcon />
+                            </ListItemIcon>
+                            <ListItemText primary={song.title} />
+                        </ListItem>
+                    );
+                })}
+            </List>
+        </>
+    );
 };
 
 export default SongList;

@@ -15,9 +15,6 @@ const selectedSongReducer = (
     state: selectedSongState = initialSongState,
     action: SelectedSongStateActions
 ): selectedSongState => {
-    console.log("prevState: ", state);
-    console.log("action: ", action);
-
     switch (action.type) {
         case SelectedSongStateAction.SELECT_SONG:
             return {
