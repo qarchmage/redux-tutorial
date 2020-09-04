@@ -1,6 +1,6 @@
 import { createStyles, makeStyles, TextField } from "@material-ui/core";
-import React, { ChangeEvent, useEffect, useState } from "react";
-import useSongSearch from "./useSongListReducer";
+import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
+import useSongListReducer from "../songs-list/useSongListReducer";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -14,13 +14,14 @@ export const SongSearch = () => {
     const classes = useStyles();
     const [term, setTerm] = useState("");
     const [debouncedTerm, setDebouncedTerm] = useState("");
-    const { setSongList } = useSongSearch();
-    // this is
+    const { setSongList, addSong } = useSongListReducer();
+
+    // after a timeout make the action call
     useEffect(() => {
         // set debounced term after 1 sec
         const timerId = setTimeout(() => {
             setDebouncedTerm(term);
-        }, 1000);
+        }, 500);
 
         // clear the old timer here
         return () => {
@@ -30,7 +31,6 @@ export const SongSearch = () => {
 
     useEffect(() => {
         // call the action here
-        console.log("debounced: ", debouncedTerm);
         setSongList(debouncedTerm);
     }, [setSongList, debouncedTerm]);
 
@@ -38,6 +38,16 @@ export const SongSearch = () => {
         <TextField
             className={classes.root}
             value={term}
+            autoFocus
+            onKeyPress={(e: KeyboardEvent<HTMLInputElement>) => {
+                if (e.key === "Enter") {
+                    if (term === "") {
+                        return;
+                    }
+                    addSong(term);
+                    setTerm("");
+                }
+            }}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 setTerm(e.currentTarget.value)
             }

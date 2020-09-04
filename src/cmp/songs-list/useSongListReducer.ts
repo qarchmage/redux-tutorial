@@ -6,14 +6,17 @@ import {
     SelectSongAct,
     SelectSongActs,
 } from "./../../store/selectSong/selectSong.actions";
+import { SongListAct, SongListActs } from "./../../store/songs/song.actions";
 
 interface songListReducerReturn {
     songs: Song[];
     setSong: (payload: Song) => void;
+    setSongList: (payload: string) => void;
+    addSong: (payload: string) => void;
 }
 const useSongListReducer: () => songListReducerReturn = () => {
     // register the dispatch actions
-    const dispatch = useDispatch<Dispatch<SelectSongActs>>();
+    const dispatch = useDispatch<Dispatch<SelectSongActs | SongListActs>>();
     // get the state from the appstate
     const { songs } = useSelector((appState: AppState) => {
         return {
@@ -32,7 +35,32 @@ const useSongListReducer: () => songListReducerReturn = () => {
         [dispatch]
     );
 
-    return { songs: songs.songs, setSong: setSong };
+    const setSongList = useCallback(
+        (payload: string) => {
+            return dispatch({
+                type: SongListAct.SEARCH_SONG,
+                payload,
+            });
+        },
+        [dispatch]
+    );
+
+    const addSong = useCallback(
+        (payload: string) => {
+            return dispatch({
+                type: SongListAct.ADD_SONG,
+                payload,
+            });
+        },
+        [dispatch]
+    );
+
+    return {
+        songs: songs.songs,
+        addSong: addSong,
+        setSong: setSong,
+        setSongList: setSongList,
+    };
 };
 
 export default useSongListReducer;
