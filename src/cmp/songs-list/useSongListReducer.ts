@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Song } from "../../util/types";
 import { AppState } from "./../../store/index";
 import {
-    SelectedSongStateAction,
-    SelectedSongStateActions,
+    SelectSongAct,
+    SelectSongActs,
 } from "./../../store/selectSong/selectSong.actions";
 
 interface songListReducerReturn {
@@ -13,7 +13,7 @@ interface songListReducerReturn {
 }
 const useSongListReducer: () => songListReducerReturn = () => {
     // register the dispatch actions
-    const dispatch = useDispatch<Dispatch<SelectedSongStateActions>>();
+    const dispatch = useDispatch<Dispatch<SelectSongActs>>();
     // get the state from the appstate
     const { songs } = useSelector((appState: AppState) => {
         return {
@@ -25,7 +25,7 @@ const useSongListReducer: () => songListReducerReturn = () => {
     const setSong = useCallback(
         (payload: Song) => {
             return dispatch({
-                type: SelectedSongStateAction.SELECT_SONG,
+                type: SelectSongAct.SELECT_SONG,
                 payload,
             });
         },

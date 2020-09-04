@@ -1,10 +1,10 @@
 import { Song } from "../../util/types";
 
-export enum SelectedSongStateAction {
+export enum SelectSongAct {
     SELECT_SONG = "SELECT_SONG",
 }
 
-export type SelectedSongStateActions = {
+export type SelectSongActs = {
     payload: Song;
-    type: SelectedSongStateAction.SELECT_SONG;
+    type: SelectSongAct.SELECT_SONG;
 };

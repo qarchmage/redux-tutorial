@@ -1,8 +1,5 @@
 import { Song } from "../../util/types";
-import {
-    SelectedSongStateAction,
-    SelectedSongStateActions,
-} from "./selectSong.actions";
+import { SelectSongAct, SelectSongActs } from "./selectSong.actions";
 
 export interface selectedSongState {
     song: Song;
@@ -13,10 +10,10 @@ export const initialSongState: selectedSongState = {
 
 const selectedSongReducer = (
     state: selectedSongState = initialSongState,
-    action: SelectedSongStateActions
+    action: SelectSongActs
 ): selectedSongState => {
     switch (action.type) {
-        case SelectedSongStateAction.SELECT_SONG:
+        case SelectSongAct.SELECT_SONG:
             return {
                 song: action.payload,
             };
