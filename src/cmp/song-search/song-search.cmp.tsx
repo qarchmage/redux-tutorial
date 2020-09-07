@@ -10,8 +10,15 @@ const useStyles = makeStyles(() =>
     })
 );
 
+interface errorField {
+    err: boolean;
+    msg: string;
+}
+
 export const SongSearch = () => {
     const classes = useStyles();
+
+    const [e, setE] = useState<errorField>();
     const [term, setTerm] = useState("");
     const [debouncedTerm, setDebouncedTerm] = useState("");
     const { setSongList, addSong } = useSongListReducer();
@@ -32,6 +39,10 @@ export const SongSearch = () => {
     useEffect(() => {
         // call the action here
         setSongList(debouncedTerm);
+        setE({ err: false, msg: "" });
+        if (debouncedTerm !== "") {
+            setE({ err: true, msg: "test error msg" });
+        }
     }, [setSongList, debouncedTerm]);
 
     return (
@@ -39,6 +50,8 @@ export const SongSearch = () => {
             className={classes.root}
             value={term}
             autoFocus
+            error={e?.err}
+            helperText={e?.msg}
             onKeyPress={(e: KeyboardEvent<HTMLInputElement>) => {
                 if (e.key === "Enter") {
                     if (term === "") {

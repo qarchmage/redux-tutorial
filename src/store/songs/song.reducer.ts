@@ -19,7 +19,6 @@ const searchSongs: Song[] = [
     { title: "iron maiden - fear of the dark", duration: "40:45" },
     { title: "iron maiden - aces high", duration: "40:45" },
 ];
-// yeah this is stupid
 export const SongReducer = (
     state: SongState = initialSongState,
     action: SongListActs
